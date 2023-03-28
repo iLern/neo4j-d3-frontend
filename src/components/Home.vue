@@ -6,14 +6,16 @@
 
 <script>
 import ForceDirected from "@/components/ForceDirected.vue";
+import axios from "axios";
 
 export default {
   name: "Home",
+
   components: {
     ForceDirected
   },
 
-  data() {
+  data: function() {
     return {
       nodes: [
         { name: "状态1", position: "left"},
@@ -32,6 +34,14 @@ export default {
         { source: 5, target: 4, relation: "[7, 8, 9]", dis: 1.7 },
       ],
     };
+  },
+
+  created: function() {
+    let uri = 'http://localhost:8080/api/get/all';
+    // 异步调用
+    axios.get(uri).then((response) => {
+      console.log(response)
+    })
   }
 }
 </script>
