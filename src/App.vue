@@ -1,19 +1,23 @@
 <template>
   <div id="app">
-    <Home></Home>
+    <Panel></Panel>
   </div>
 </template>
 
 <script>
-import Home from "@/components/Home.vue";
+import Graph from "@/components/Graph.vue";
+import Panel from "@/components/Panel.vue";
 
 export default {
   name: "App",
+
   data() {
     return {};
   },
+
   components: {
-    Home,
+    Panel,
+    Graph
   },
 };
 </script>

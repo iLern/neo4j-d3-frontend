@@ -1,8 +1,8 @@
 <template>
   <div>
     <ForceDirected
-      width="1200"
-      height="800"
+      width="1000"
+      height="700"
       :nodes="nodes"
       :edges="edges"
     ></ForceDirected>
@@ -13,7 +13,7 @@
 import ForceDirected from "@/components/ForceDirected.vue";
 
 export default {
-  name: "Home",
+  name: "Graph",
 
   components: {
     ForceDirected,

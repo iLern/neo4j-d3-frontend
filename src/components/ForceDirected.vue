@@ -99,7 +99,7 @@ export default {
         .data(edges)
         .enter()
         .append("text")
-        .text((d) => d.parameter);
+        .text((d) => `[${d.parameter}]`);
 
       // 创建分组
       let gs = g
@@ -127,7 +127,30 @@ export default {
         .text((d) => d.name);
 
       // hover
-      gs.on("mouseover", mouseover).on("mouseleave", mouseleave);
+      gs.on("mouseover", function (event, d) {
+          let xPosition = event.pageX + 10
+          let yPosition = event.pageY + 10
+
+          console.log(xPosition, yPosition);
+
+          // 显示div标签信息
+          let tooltip = d3
+            .select("#tooltip")
+            .style("opacity", 1)
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px");
+
+          // 设置div标签内容
+          tooltip.select("#jointAngle").text(`关节角: ${d.jointAngle}`);
+          tooltip.select("#position").text(`位置: ${d.position}`);
+
+          d3.select("#tooltip").classed("hidden", false);
+      })
+
+      // leave
+      gs.on("mouseleave", function (event, d) {
+        d3.select("#tooltip").classed("hidden", true);
+      });
 
       // ticked 表示力导向图如何随时间变化
       function ticked() {
@@ -167,32 +190,36 @@ export default {
         d.fy = null;
       }
 
-      // hover
-      function mouseover(event, d) {
-        console.log(d);
-        console.log(d.x);
+      // // hover
+      // function mouseover(event, d) {
+      //   console.log(d);
+      //   console.log(d.x, d.y);
+      //
+      //   let pt = d3.pointer(event, this);
+      //   console.log(pt);
+      //
+      //   let xPosition = d3.select(d).attr("x");
+      //   let yPosition = d3.select(d).attr("y");
+      //
+      //   console.log(xPosition, yPosition);
+      //
+      //   // 显示div标签信息
+      //   let tooltip = d3
+      //     .select("#tooltip")
+      //     .style("opacity", 1)
+      //     .style("left", xPosition + "px")
+      //     .style("top", yPosition + "px");
+      //
+      //   // 设置div标签内容
+      //   tooltip.select("#jointAngle").text(`关节角: ${d.jointAngle}`);
+      //   tooltip.select("#position").text(`位置: ${d.position}`);
+      //
+      //   d3.select("#tooltip").classed("hidden", false);
+      // }
 
-        let pt = d3.pointer(event, this);
-        console.log(pt);
-
-        // 显示div标签信息
-        let tooltip = d3
-          .select("#tooltip")
-          .style("position", "absolute")
-          .style("opacity", 1)
-          .style("left", d.x + 10 + "px")
-          .style("top", d.y - 20 + "px");
-
-        // 设置div标签内容
-        tooltip.select("#jointAngle").text(`关节角: ${d.jointAngle}`);
-        tooltip.select("#position").text(`位置: ${d.position}`);
-
-        d3.select("#tooltip").classed("hidden", false);
-      }
-
-      function mouseleave(event, d) {
-        d3.select("#tooltip").classed("hidden", true);
-      }
+      // function mouseleave(event, d) {
+      //   d3.select("#tooltip").classed("hidden", true);
+      // }
     },
   },
 };
