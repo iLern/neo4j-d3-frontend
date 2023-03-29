@@ -1,6 +1,11 @@
 <template>
   <div>
-    <ForceDirected width="1200" height="800" :nodes="nodes" :edges="edges"></ForceDirected>
+    <ForceDirected
+      width="1200"
+      height="800"
+      :nodes="nodes"
+      :edges="edges"
+    ></ForceDirected>
   </div>
 </template>
 
@@ -11,42 +16,58 @@ export default {
   name: "Home",
 
   components: {
-    ForceDirected
+    ForceDirected,
   },
 
-  data: function() {
+  data: function () {
     return {
       nodes: [
-        // { name: "状态1", position: "left"},
-        // { name: "状态2", position: "right" },
-        // { name: "状态3", position: "center" },
-        // { name: "状态4", position: "left" },
-        // { name: "状态5", position: "right" },
-        // { name: "状态6", position: "center" },
+        // { name: "状态1", jointAngle:[1, 2, 3, 4], position: "left"},
       ],
       edges: [
-        // { source: 1, target: 0, relation: "[1, 2, 3]", dis: 1.7 },
-        // { source: 2, target: 0, relation: "[3 ,4, 5]", dis: 1.7 },
-        // { source: 3, target: 0, relation: "[4, 5, 6]", dis: 1.7 },
-        // { source: 4, target: 0, relation: "[5, 6, 7]", dis: 1.7 },
-        // { source: 3, target: 4, relation: "[6, 7, 8]", dis: 1.7 },
-        // { source: 5, target: 4, relation: "[7, 8, 9]", dis: 1.7 },
+        // {source: 0, target: 1, parameter: [1, 2, 3], planningMethod: '1'}
       ],
     };
   },
 
-  created: function() {
-    let uri = '/api/get/all';
+  created: function () {
+    let uri = "/api/get/all";
     // 异步调用
     this.$http.get(uri).then((response) => {
-      console.log(response.data)
+      let data = response.data;
+
+      console.log(data);
+
       // 箭头函数中this的作用域继承于其父级
-      this.nodes = response.data;
-    })
-  }
-}
+      this.nodes = data;
+
+      let edges = []
+      data.forEach((item, index) => {
+        if (index < data.length - 1) {
+          for (let i = 0; i < item.achievableStatus.length; i++) {
+            // 返回一个 Edge 对象
+            let newEdge = {
+              source: index,
+              // 查找元素并返回下标，其为目标点的编号
+              // TODO: 效率低下，需要优化
+              target: data.indexOf(
+                  data.find((item2) => {
+                    return item2.name === item.achievableStatus[i].armStatus.name
+                  })
+              ),
+              parameter: item.achievableStatus[i].parameter,
+              planningMethod: item.achievableStatus[i].planningMethod,
+            };
+
+            edges.push(newEdge)
+          }
+        }
+      })
+
+      this.edges = edges
+    });
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
