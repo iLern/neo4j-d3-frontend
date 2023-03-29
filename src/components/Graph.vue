@@ -12,6 +12,14 @@
 <script>
 import ForceDirected from "@/components/ForceDirected.vue";
 
+function mapNameToId(name, nodes) {
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].name === name) {
+      return i;
+    }
+  }
+  return -1;
+}
 export default {
   name: "Graph",
 
@@ -31,7 +39,7 @@ export default {
   },
 
   created: function () {
-    let uri = "/api/get/all";
+    let uri = "/api/arm-status/all";
     // 异步调用
     this.$http.get(uri).then((response) => {
       let data = response.data;
@@ -39,31 +47,20 @@ export default {
       console.log(data);
 
       // 箭头函数中this的作用域继承于其父级
-      this.nodes = data;
+      this.nodes = data.nodes;
 
       let edges = [];
-      data.forEach((item, index) => {
-        if (index < data.length - 1) {
-          for (let i = 0; i < item.achievableStatus.length; i++) {
-            // 返回一个 Edge 对象
-            let newEdge = {
-              source: index,
-              // 查找元素并返回下标，其为目标点的编号
-              // TODO: 效率低下，需要优化
-              target: data.indexOf(
-                data.find((item2) => {
-                  return item2.name === item.achievableStatus[i].armStatus.name;
-                })
-              ),
-              parameter: item.achievableStatus[i].parameter,
-              planningMethod: item.achievableStatus[i].planningMethod,
-            };
+      data.edges.forEach((item, index) => {
+        let source = mapNameToId(item.from, this.nodes);
+        let target = mapNameToId(item.to, this.nodes);
 
-            edges.push(newEdge);
-          }
-        }
+        edges.push({
+          source: source,
+          target: target,
+          parameter: item.parameter,
+          planningMethod: item.planningMethod,
+        });
       });
-
       this.edges = edges;
     });
   },
