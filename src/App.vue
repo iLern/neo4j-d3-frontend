@@ -8,16 +8,14 @@
 import Home from "@/components/Home.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   data() {
-    return {
-
-    }
+    return {};
   },
   components: {
-    Home
-  }
-}
+    Home,
+  },
+};
 </script>
 
 <style>

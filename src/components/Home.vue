@@ -41,7 +41,7 @@ export default {
       // 箭头函数中this的作用域继承于其父级
       this.nodes = data;
 
-      let edges = []
+      let edges = [];
       data.forEach((item, index) => {
         if (index < data.length - 1) {
           for (let i = 0; i < item.achievableStatus.length; i++) {
@@ -51,20 +51,20 @@ export default {
               // 查找元素并返回下标，其为目标点的编号
               // TODO: 效率低下，需要优化
               target: data.indexOf(
-                  data.find((item2) => {
-                    return item2.name === item.achievableStatus[i].armStatus.name
-                  })
+                data.find((item2) => {
+                  return item2.name === item.achievableStatus[i].armStatus.name;
+                })
               ),
               parameter: item.achievableStatus[i].parameter,
               planningMethod: item.achievableStatus[i].planningMethod,
             };
 
-            edges.push(newEdge)
+            edges.push(newEdge);
           }
         }
-      })
+      });
 
-      this.edges = edges
+      this.edges = edges;
     });
   },
 };

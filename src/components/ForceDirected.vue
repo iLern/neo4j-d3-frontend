@@ -114,10 +114,10 @@ export default {
 
       // 绘制节点
       gs.append("circle")
-          .attr("r", 25)
-          .attr("fill", "#D9C8AE")
-          .attr("stroke", "#c0a378")
-          .attr("stroke-width", 2);
+        .attr("r", 25)
+        .attr("fill", "#D9C8AE")
+        .attr("stroke", "#c0a378")
+        .attr("stroke-width", 2);
 
       // 文字
       gs.append("text")
@@ -175,6 +175,7 @@ export default {
         let pt = d3.pointer(event, this);
         console.log(pt);
 
+        // 显示div标签信息
         let tooltip = d3
           .select("#tooltip")
           .style("position", "absolute")
@@ -182,7 +183,7 @@ export default {
           .style("left", d.x + 10 + "px")
           .style("top", d.y - 20 + "px");
 
-        // 设置文字
+        // 设置div标签内容
         tooltip.select("#jointAngle").text(`关节角: ${d.jointAngle}`);
         tooltip.select("#position").text(`位置: ${d.position}`);
 
