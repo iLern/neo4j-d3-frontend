@@ -11,6 +11,9 @@ import VueAxios from "vue-axios";
 
 const app = createApp(App);
 
+axios.defaults.baseURL = "http://localhost:8080";
+app.config.globalProperties.$http = axios;
+
 app.use(ElementPlus);
 app.use(router);
 app.use(VueAxios, axios);

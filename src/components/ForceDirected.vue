@@ -4,7 +4,10 @@
 
     <div id="tooltip" class="hidden">
       <p><strong>状态参数</strong></p>
-      <p><span id="value"></span></p>
+      <p>
+        <span id="position"></span> <br>
+        <span id="jointAngle"></span>
+      </p>
     </div>
   </div>
 </template>
@@ -63,9 +66,6 @@ export default {
       let nodes = this.my_nodes;
       // 边集
       let edges = this.my_edges;
-
-      // console.log(nodes)
-      // console.log(edges)
 
       // 新建一个力导向图
       let forceSimulation = d3.forceSimulation(nodes)              // 新建一个力模拟器，但是没有任何力的作用 调用force方法来生成力
@@ -140,7 +140,8 @@ export default {
       // drag
       function started(event, d) {
         if (!event.active) {
-          forceSimulation.alphaTarget(0.8).restart(); // 设置衰减系数，对节点位置移动过程的模拟，数值越高移动越快，数值范围[0, 1]
+          // 设置衰减系数，对节点位置移动过程的模拟，数值越高移动越快，数值范围[0, 1]
+          forceSimulation.alphaTarget(0.8).restart();
         }
         d.fx = d.x;
         d.fy = d.y;
@@ -167,21 +168,21 @@ export default {
         let pt = d3.pointer(event, this)
         console.log(pt)
 
-        d3.select('#tooltip')
+        let tooltip = d3.select('#tooltip')
             .style('position', 'absolute')
             .style('opacity', 1)
             .style('left', d.x + 10 + 'px')
             .style('top', d.y - 20 + 'px')
-            .select('#value')
-            .text(`位置：${d.position}`)
 
-        d3.select('#tooltip')
-            .classed('hidden', false)
+        // 设置文字
+        tooltip.select('#jointAngle').text(`关节角: ${d.jointAngle}`)
+        tooltip.select('#position').text(`位置: ${d.position}`)
+
+        d3.select('#tooltip').classed('hidden', false)
       }
 
       function mouseleave(event, d) {
-        d3.select('#tooltip')
-            .classed('hidden', true)
+        d3.select('#tooltip').classed('hidden', true)
       }
 
     },
