@@ -19,10 +19,10 @@
         </el-row>
         <el-row>
             <el-col :span="12">
-                <el-button type="primary" @click="submit">查询</el-button>
+                <el-button type="primary" @click="submit()">查询</el-button>
             </el-col>
             <el-col :span="12">
-                <el-button type="primary" @click="clear">清空</el-button>
+                <el-button type="primary" @click="clear()">清空</el-button>
             </el-col>
         </el-row>
     </el-collapse-item>
