@@ -1,11 +1,6 @@
 <template>
     <div>
-        <ForceDirected
-                width="1000"
-                height="700"
-                :nodes="nodes"
-                :edges="edges"
-        ></ForceDirected>
+        <ForceDirected width="1000" height="700" :nodes="nodes" :edges="edges"></ForceDirected>
     </div>
 </template>
 
@@ -22,9 +17,9 @@ function mapNameToId(name, nodes) {
 }
 
 function loadAll() {
-    let uri = "/api/arm-status/all";
+    let url = "/api/arm-status/all";
     // 异步调用
-    this.$http.get(uri).then((response) => {
+    this.$http.get(url).then((response) => {
         let data = response.data;
 
         console.log(data);
@@ -67,7 +62,7 @@ export default {
     },
 
     created: function () {
-        loadAll.call(this);
+        loadAll.call(this)
     },
 };
 </script>

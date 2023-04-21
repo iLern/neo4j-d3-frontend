@@ -34,14 +34,26 @@ export default {
     methods: {
         submit() {
             // 输出起点和终点
-            console.log(this.sourceInput);
-            console.log(this.targetInput);
+            let data = {
+                from: this.sourceInput,
+                to: this.targetInput,
+                type: this.typeValue
+            }
+            console.log(data);
             console.log("submit");
+
+            let url = "/api/shortest-path/"
+
+            this.$http.get(url, {
+                params: data
+            }).then((response) => {
+                console.log(response.data);
+            });
         },
         clear() {
             this.sourceInput = "";
             this.targetInput = "";
-            this.value = "";
+            this.typeValue = "";
             console.log("clear");
         },
     },

@@ -10,6 +10,7 @@
                         功能面板
                         <div class="demo-collapse">
                             <el-collapse accordion>
+                                <!--                                TODO：数据加载问题-->
                                 <ShortestPath></ShortestPath>
                                 <el-collapse-item title="待开发"></el-collapse-item>
                                 <el-collapse-item title="待开发"></el-collapse-item>
@@ -38,6 +39,10 @@ export default {
 
     data() {
         return {};
+    },
+
+    created() {
+        console.log("Panel created");
     },
 
     components: {

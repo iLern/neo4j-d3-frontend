@@ -55,7 +55,7 @@ export default {
             let height = this.height ? this.height : 600;
 
             // 重新加载
-            d3.selectAll("#svg_demo svg > *").remove();
+            d3.selectAll("#graph svg > *").remove();
             let svg = d3.select("svg");
 
             let g = svg
