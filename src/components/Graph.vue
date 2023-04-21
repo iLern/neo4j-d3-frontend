@@ -40,7 +40,11 @@ function loadAll() {
             });
         });
         this.edges = edges;
-    });
+    }).then(() => {
+        console.log("loadAll finished");
+        console.log(this.nodes);
+        console.log(this.edges);
+    })
 }
 
 export default {
@@ -62,7 +66,7 @@ export default {
     },
 
     created: function () {
-        loadAll.call(this)
+        loadAll.call(this);
     },
 };
 </script>

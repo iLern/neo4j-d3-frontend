@@ -36,27 +36,32 @@ export default {
     mounted() {
         this.my_nodes = this.nodes;
         this.my_edges = this.edges;
+
         this.init();
         console.log("重新加载啦");
     },
 
     watch: {
+        // 监听节点和边的变化，每当node变化时更新组件
         nodes() {
             this.my_nodes = this.nodes;
             this.my_edges = this.edges;
+
             this.init();
         },
     },
 
     methods: {
         init() {
+            console.log("init");
+
             let marge = {top: 60, bottom: 60, left: 60, right: 60};
             let width = this.width ? this.width : 900;
             let height = this.height ? this.height : 600;
 
             // 重新加载
             d3.selectAll("#graph svg > *").remove();
-            let svg = d3.select("svg");
+            let svg = d3.selectAll("svg");
 
             let g = svg
                 .append("g")
@@ -75,10 +80,7 @@ export default {
                 .force("charge", d3.forceManyBody().strength(-500)) // 斥力
                 .force(
                     "center",
-                    d3
-                        .forceCenter()
-                        .x(width / 2)
-                        .y(height / 2)
+                    d3.forceCenter().x(width / 2).y(height / 2)
                 ) // 确定模拟图的中心
                 .on("tick", ticked); // 如何随时间变化
 
