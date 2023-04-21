@@ -50,7 +50,7 @@ export default {
       this.nodes = data.nodes;
 
       let edges = [];
-      data.edges.forEach((item, index) => {
+      data.edges.forEach((item) => {
         let source = mapNameToId(item.from, this.nodes);
         let target = mapNameToId(item.to, this.nodes);
 
