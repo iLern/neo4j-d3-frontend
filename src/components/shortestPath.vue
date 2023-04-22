@@ -48,6 +48,7 @@ export default {
                 params: data
             }).then((response) => {
                 console.log(response.data);
+                // TODO: 调用ForceDirected.vue中的方法，实现更新
             });
         },
         clear() {

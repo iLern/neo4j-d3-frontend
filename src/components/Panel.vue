@@ -2,7 +2,7 @@
     <div class="common-layout">
         <el-container>
             <el-header>
-                <el-card class="box-card"> 图数据库可视化系统</el-card>
+                <el-card class="box-card"><b>Neo4j图数据库可视化系统</b></el-card>
             </el-header>
             <el-container>
                 <el-aside style="margin: 20px">
